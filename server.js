@@ -9,6 +9,10 @@ const port = 8080;
 
 //Create server
 const server = http.createServer((req, res) => {
+    //Declare new var `addr` and assign to `request.url` to get the URL from the request
+    let addr = req.url,
+        //parse the request.url
+        q = url.parse(addr, true),
 });
 
 //Listens for requests on port
