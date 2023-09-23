@@ -24,6 +24,17 @@ const server = http.createServer((req, res) => {
         //If it doesn't contain: change the `filePath` for index.html - to return the “index.html” file to the user;
         filePath = 'index.html';
     }
+
+    //Use `filePath` to return either “documentation.html” or “index.html” file to the user;
+    fs.readFile(filePath, (err, data) => {
+        if (err) {
+            throw err;
+        }
+
+        res.writeHead(200, { 'Content-Type': 'text/html' });
+        res.write(data);
+        res.end();
+    });
 });
 
 //Listens for requests on port
