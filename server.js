@@ -6,3 +6,12 @@ const url = require('node:url');
 const fs = require('node:fs');
 //Server port
 const port = 8080;
+
+//Create server
+const server = http.createServer((req, res) => {
+});
+
+//Listens for requests on port
+server.listen(port, () => {
+    console.log(`Server running at ${port} port.`);
+});
