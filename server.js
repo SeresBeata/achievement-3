@@ -25,6 +25,19 @@ const server = http.createServer((req, res) => {
         filePath = 'index.html';
     }
 
+    //For all requests coming in to “server.js” file, use the fs module to log both the request URL and a timestamp to the “log.txt” file.
+    fs.appendFile(
+        'log.txt',
+        'URL: ' + addr + '\nTimestamp: ' + new Date() + '\n\n',
+        (err) => {
+            if (err) {
+                console.log(err);
+            } else {
+                console.log('Added to log.');
+            }
+        }
+    );
+
     //Use `filePath` to return either “documentation.html” or “index.html” file to the user;
     fs.readFile(filePath, (err, data) => {
         if (err) {
