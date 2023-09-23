@@ -13,6 +13,9 @@ const server = http.createServer((req, res) => {
     let addr = req.url,
         //parse the request.url
         q = url.parse(addr, true),
+        //Create new var and set to an empty string
+        filePath = '';
+
 });
 
 //Listens for requests on port
