@@ -16,6 +16,14 @@ const server = http.createServer((req, res) => {
         //Create new var and set to an empty string
         filePath = '';
 
+    //Determine if the URL contains the word “documentation”
+    if (q.pathname.includes('documentation')) {
+        //If it contains: change the `filePath` for documentation.html - to return the “documentation.html” file to the user;
+        filePath = __dirname + '/documentation.html';
+    } else {
+        //If it doesn't contain: change the `filePath` for index.html - to return the “index.html” file to the user;
+        filePath = 'index.html';
+    }
 });
 
 //Listens for requests on port
