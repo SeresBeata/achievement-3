@@ -7,3 +7,8 @@ const express = require('express'),
 const app = express();
 //Server Port
 const port = 3000;
+
+// Create a writable stream (in append mode) for writing log data in "log.txt"file
+const accessLogStream = fs.createWriteStream(path.join(__dirname, 'log.txt'), {
+    flags: 'a',
+});
