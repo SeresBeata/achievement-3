@@ -69,3 +69,9 @@ app.get('/', (req, res) => {
     //return textual response
     res.send('Welcome to my Movie App!');
 });
+
+//Create Express GET route located at the endpoint “/movies”
+app.get('/movies', (req, res) => {
+    //return a JSON obj
+    res.json(topMovies);
+});
