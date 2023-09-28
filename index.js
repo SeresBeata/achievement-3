@@ -63,3 +63,9 @@ let topMovies = [
         year: '2011',
     },
 ];
+
+//Create Express GET route located at the endpoint “/”
+app.get('/', (req, res) => {
+    //return textual response
+    res.send('Welcome to my Movie App!');
+});
