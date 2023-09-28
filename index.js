@@ -75,3 +75,9 @@ app.get('/movies', (req, res) => {
     //return a JSON obj
     res.json(topMovies);
 });
+
+//Create error-handling middleware function
+app.use((err, req, res, next) => {
+    console.error(err.stack);
+    res.status(500).send('Something broke!');
+});
