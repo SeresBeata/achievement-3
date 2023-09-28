@@ -15,3 +15,7 @@ const accessLogStream = fs.createWriteStream(path.join(__dirname, 'log.txt'), {
 
 //Use express.static() to serve “documentation.html” from public folder
 app.use('/documentation', express.static(path.join(__dirname, 'public')));
+
+// Use logging middleware
+app.use(morgan('combined', { stream: accessLogStream }));
+app.use(morgan('dev'));
