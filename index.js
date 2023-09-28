@@ -13,12 +13,12 @@ const accessLogStream = fs.createWriteStream(path.join(__dirname, 'log.txt'), {
     flags: 'a',
 });
 
-//Use express.static() to serve “documentation.html” from public folder
-app.use('/documentation', express.static(path.join(__dirname, 'public')));
-
 // Use logging middleware
 app.use(morgan('combined', { stream: accessLogStream }));
 app.use(morgan('dev'));
+
+//Use express.static() to serve “documentation.html” from public folder
+app.use('/documentation', express.static(path.join(__dirname, 'public')));
 
 //Create array
 let topMovies = [
