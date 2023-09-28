@@ -12,3 +12,6 @@ const port = 3000;
 const accessLogStream = fs.createWriteStream(path.join(__dirname, 'log.txt'), {
     flags: 'a',
 });
+
+//Use express.static() to serve “documentation.html” from public folder
+app.use('/documentation', express.static(path.join(__dirname, 'public')));
