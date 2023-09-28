@@ -81,3 +81,8 @@ app.use((err, req, res, next) => {
     console.error(err.stack);
     res.status(500).send('Something broke!');
 });
+
+//Listen for requests on port
+app.listen(port, () => {
+    console.log(`Example app listening on port ${port}`);
+});
