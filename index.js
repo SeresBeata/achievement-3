@@ -19,3 +19,47 @@ app.use('/documentation', express.static(path.join(__dirname, 'public')));
 // Use logging middleware
 app.use(morgan('combined', { stream: accessLogStream }));
 app.use(morgan('dev'));
+
+//Create array
+let topMovies = [
+    {
+        title: 'Anna and the King',
+        year: '1999',
+    },
+    {
+        title: 'Matrix',
+        year: '1999',
+    },
+    {
+        title: 'Back to the Future',
+        year: '1985',
+    },
+    {
+        title: 'Memoirs of a Geisha',
+        year: '2005',
+    },
+    {
+        title: 'Pirates of the Caribbean: The Curse of the Black Pearl',
+        year: '2003',
+    },
+    {
+        title: 'Inception',
+        year: '2010',
+    },
+    {
+        title: 'Jurassic Park',
+        year: '1993',
+    },
+    {
+        title: 'The Dark Knight',
+        year: '2008',
+    },
+    {
+        title: 'Star Wars: Return of the Jedi',
+        year: '1983',
+    },
+    {
+        title: 'The Intouchables',
+        year: '2011',
+    },
+];
