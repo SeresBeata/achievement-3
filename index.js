@@ -272,6 +272,23 @@ app.get('/movies/genres/:genreName', (req, res) => {
     }
 });
 
+//Create Express GET route located at the endpoint “/movies/directors/:directorName”. Return data about a director by name.
+app.get('/movies/directors/:directorName', (req, res) => {
+    const { directorName } = req.params; //obj destructuring
+    //find a director by name
+    let directorInMovies = movies.find((movie) => {
+        return movie.director.name === directorName;
+    });
+    if (directorInMovies) {
+        //return the data if director is found
+        let director = directorInMovies.director;
+        res.status(200).json(director);
+    } else {
+        //return message if director is not found
+        res.status(400).send(
+            `Oh sorry...but there is no director with the name ${directorName}.`
+        );
+    }
 });
 
 //Create error-handling middleware function
