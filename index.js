@@ -253,6 +253,25 @@ app.get('/movies/:title', (req, res) => {
     }
 });
 
+//Create Express GET route located at the endpoint “/movies/genres/:genreName”. Return data about a genre by it's name.
+app.get('/movies/genres/:genreName', (req, res) => {
+    const { genreName } = req.params; //obj destructuring
+    //find a genre by name
+    let genreInMovies = movies.find((movie) => {
+        return movie.genre.name === genreName;
+    });
+    if (genreInMovies) {
+        //return the data if genre is found
+        let genre = genreInMovies.genre;
+        res.status(200).json(genre);
+    } else {
+        //return message if genre is not found
+        res.status(400).send(
+            `Oh sorry...but there is no genre with the name ${genreName}.`
+        );
+    }
+});
+
 });
 
 //Create error-handling middleware function
