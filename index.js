@@ -25,8 +25,8 @@ app.use('/documentation', express.static(path.join(__dirname, 'public')));
 //Use body-parser middleware to parse incoming request bodies
 app.use(bodyParser.json());
 
-//Create array
-let topMovies = [
+//Create array for movies
+let movies = [
     {
         title: 'Anna and the King',
         year: '1999',
@@ -218,7 +218,7 @@ app.get('/', (req, res) => {
 //Create Express GET route located at the endpoint “/movies”
 app.get('/movies', (req, res) => {
     //return a JSON obj
-    res.json(topMovies);
+    res.json(movies);
 });
 
 //Create error-handling middleware function
