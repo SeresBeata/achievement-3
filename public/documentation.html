@@ -158,5 +158,142 @@
                 </tr>
             </tbody>
         </table>
+
+        <section>
+            <h1>Examples</h1>
+
+            <h3>Get data about a single movie "Anna and the King"</h3>
+            <p>Endpoint: <strong>/movies/Anna%20and%20the%20King</strong></p>
+            <pre>
+              <code>
+                  {
+                      title: 'Anna and the King',
+                      year: '1999',
+                      description:
+                          "The story concerns Anna Leonowens, an English school teacher in Siam during the late 19th century, who becomes the teacher of King Mongkut's many children and wives.",
+                      genre: {
+                          name: 'period drama',
+                          description:
+                              'A film production set in a particular historical period and characterized by the use of costumes, sets, and props that are typical or evocative of the era.',
+                      },
+                      director: {
+                          name: 'Andy Tennant',
+                          bio: ' An American screenwriter, film and television director, actor, and dancer.',
+                          born: '1955',
+                          death: '',
+                      },
+                      img: 'https://upload.wikimedia.org/wikipedia/en/5/5d/Anna_and_the_king.jpg',
+                  }
+              </code>
+            </pre>
+
+            <h3>Get data about a single genre "science fiction"</h3>
+            <p>Endpoint: <strong>/movies/genres/science%20fiction</strong></p>
+            <pre>
+              <code>
+                  {
+                      "name": "science fiction",
+                      "description": "Science fiction (or sci-fi) is a film genre that uses speculative, fictional science-based depictions of phenomena."
+                  }
+              </code>
+            </pre>
+
+            <h3>Get data about a single director "George Lucas"</h3>
+            <p>
+                Endpoint:
+                <strong>/movies/directors/George%20Lucas</strong>
+            </p>
+            <pre>
+              <code>
+                  {
+                      "name": "George Lucas",
+                      "bio": " An American film and television director, writer and producer.",
+                      "born": "1944",
+                      "death": ""
+                  }
+              </code>
+            </pre>
+
+            <h3>Allow new user to register</h3>
+            <p>
+                Endpoint:
+                <strong>/users</strong>
+            </p>
+            <p>A JSON object holding data about the user to add:</p>
+            <pre>
+              <code>
+                  {
+                      "name": "Rikki",
+                      "favouriteMovies": [],
+                  }
+              </code>
+            </pre>
+            <p>A JSON object holding data about the user that was added:</p>
+            <pre>
+              <code>
+                  {
+                      "name": "Rikki",
+                      "favouriteMovies": [],
+                      "id": "678a3fc4-b511-454e-87bd-86d8ee0c4f27"
+                  }
+              </code>
+            </pre>
+
+            <h3>
+                Allow users to add the movie "Anna and the King" to
+                "favouriteMovies"
+            </h3>
+            <p>Endpoint: <strong>/users/1/Anna%20and%20the%20King</strong></p>
+            <pre>
+              <code>
+                  "Anna and the King has been added to user id 1's array.""
+              </code>
+            </pre>
+
+            <h3>Allow users to update username</h3>
+            <p>
+                Endpoint:
+                <strong>/users/1</strong>
+            </p>
+            <p>A JSON object holding data about the new username.:</p>
+            <pre>
+              <code>
+                  {
+                      "name": "Mary"
+                  }
+              </code>
+            </pre>
+            <p>A JSON object holding data about the user:</p>
+            <pre>
+              <code>
+                  {
+                      "id": 1,
+                      "name": "Mary",
+                      "favouriteMovies": [
+                          "Anna and the King"
+                      ]
+                  }
+              </code>
+            </pre>
+
+            <h3>
+                Allow users to delete the movie "Anna and the King" from
+                "favouriteMovies"
+            </h3>
+            <p>Endpoint: <strong>/users/1/Anna%20and%20the%20King</strong></p>
+            <pre>
+              <code>
+                  "Anna and the King has been removed from user id 1's array."
+              </code>
+            </pre>
+
+            <h3>Allow users to deregister</h3>
+            <p>Endpoint: <strong>/users/1/</strong></p>
+            <pre>
+              <code>
+                  "User with id 1 has been deregistered."
+              </code>
+            </pre>
+        </section>
     </body>
 </html>
