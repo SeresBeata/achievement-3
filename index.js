@@ -362,6 +362,25 @@ app.delete('/users/:id/:movieTitle', (req, res) => {
     }
 });
 
+//Create Express DELETE route located at the endpoint “/users/:id”. Allow users to deregister.
+app.delete('/users/:id', (req, res) => {
+    const { id } = req.params;
+
+    let user = users.find((user) => {
+        return user.id.toString() === id;
+    });
+
+    if (user) {
+        users = users.filter((user) => {
+            return user.id.toString() !== id;
+        });
+        // res.status(200).json(users);
+        res.status(200).send(`User with id ${id} has been deregistered.`);
+    } else {
+        res.status(400).send(`There is no such user with id: ${id}.`);
+    }
+});
+
 //Create error-handling middleware function
 app.use((err, req, res, next) => {
     console.error(err.stack);
