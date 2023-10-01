@@ -305,6 +305,23 @@ app.post('/users', (req, res) => {
     }
 });
 
+// Create Express PUT route located at the endpoint “/users/:id”. Allow users to update username.
+app.put('/users/:id', (req, res) => {
+    const { id } = req.params;
+    const updateUser = req.body;
+
+    let user = users.find((user) => {
+        return user.id.toString() === id;
+    });
+
+    if (user) {
+        user.name = updateUser.name;
+        res.status(200).json(user);
+    } else {
+        res.status(400).send(`There is no such user with id: ${id}.`);
+    }
+});
+
 //Create error-handling middleware function
 app.use((err, req, res, next) => {
     console.error(err.stack);
