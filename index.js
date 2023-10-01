@@ -291,6 +291,20 @@ app.get('/movies/directors/:directorName', (req, res) => {
     }
 });
 
+//Create Express POST route located at the endpoint “/users”. Allow new users to register.
+app.post('/users', (req, res) => {
+    const newUser = req.body;
+
+    if (!newUser.name) {
+        const message = 'Missing name in request body';
+        res.status(400).send(message);
+    } else {
+        newUser.id = uuid.v4();
+        users.push(newUser);
+        res.status(201).send(newUser);
+    }
+});
+
 //Create error-handling middleware function
 app.use((err, req, res, next) => {
     console.error(err.stack);
