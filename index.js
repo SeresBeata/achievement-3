@@ -229,10 +229,12 @@ app.get('/', (req, res) => {
     res.send('Welcome to my Movie App!');
 });
 
-//Create Express GET route located at the endpoint “/movies”
+//Create Express GET route located at the endpoint “/movies”. Return a list of ALL movies.
 app.get('/movies', (req, res) => {
-    //return a JSON obj
-    res.json(movies);
+    //return status code and JSON obj
+    res.status(200).json(movies);
+});
+
 });
 
 //Create error-handling middleware function
