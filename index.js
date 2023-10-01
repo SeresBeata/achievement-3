@@ -341,6 +341,27 @@ app.post('/users/:id/:movieTitle', (req, res) => {
     }
 });
 
+//Create Express DELETE route located at the endpoint “/users/:id/:movieTitle”. Allow users to delete a movie from favoriteMovies
+app.delete('/users/:id/:movieTitle', (req, res) => {
+    const { id, movieTitle } = req.params;
+
+    let user = users.find((user) => {
+        return user.id.toString() === id;
+    });
+
+    if (user) {
+        user.favouriteMovies = user.favouriteMovies.filter((title) => {
+            return title !== movieTitle;
+        });
+        // res.status(200).json(user);
+        res.status(200).send(
+            `${movieTitle} has been removed from user id ${id}'s array.`
+        );
+    } else {
+        res.status(400).send(`There is no such user with id: ${id}.`);
+    }
+});
+
 //Create error-handling middleware function
 app.use((err, req, res, next) => {
     console.error(err.stack);
