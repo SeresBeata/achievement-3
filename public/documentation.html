@@ -15,5 +15,117 @@
             genres. As well ass, to allow to users to sign up, update their
             personal information, and create a list of their favorite movies.
         </p>
+
+        <table id="myTable" width="100%">
+            <thead>
+                <tr>
+                    <th scope="col">Request</th>
+                    <th scope="col">URL</th>
+                    <th scope="col">HTTP Method</th>
+                    <th scope="col">Request body data format</th>
+                    <th scope="col">Response body data format</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr>
+                    <td>Get a list of all movies and their data</td>
+                    <td>/movies</td>
+                    <td>GET</td>
+                    <td>None</td>
+                    <td>A JSON object holding data about all the movies</td>
+                </tr>
+
+                <tr>
+                    <td>Get data about a single movie by title</td>
+                    <td>/movies/[movieTitle]</td>
+                    <td>GET</td>
+                    <td>None</td>
+                    <td>
+                        A JSON object holding data about a single movie,
+                        containing a title, year, description, genre, director
+                        and img property.
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>Return data about a genre by it's name.</td>
+                    <td>/movies/genres/[genreName]</td>
+                    <td>GET</td>
+                    <td>None</td>
+                    <td>
+                        A JSON object holding data about a single genre,
+                        containing a name and description property.
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>Return data about a director by name.</td>
+                    <td>/movies/directors/[directorName]</td>
+                    <td>GET</td>
+                    <td>None</td>
+                    <td>
+                        A JSON object holding data about a single director,
+                        containing a name, bio, born and death property.
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>Allow new user to register.</td>
+                    <td>/users</td>
+                    <td>POST</td>
+                    <td>A JSON object holding data about the user to add.</td>
+                    <td>
+                        A JSON object holding data about the user that was
+                        added, including an id, name and favouriteMovies
+                        property.
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>Allow users to add a movie to favouriteMovies</td>
+                    <td>/users/[ID]/[movieTitle]</td>
+                    <td>POST</td>
+                    <td>None</td>
+                    <td>
+                        A text message indicating whether the movie was
+                        successfully added to favouriteMovies.
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>Allow users to update username.</td>
+                    <td>/users/[ID]</td>
+                    <td>PUT</td>
+                    <td>A JSON object holding data about the new username.</td>
+                    <td>
+                        A JSON object holding data about the user, including the
+                        id, updated name and favouriteMovies property.
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>Allow users to delete a movie from favouriteMovies.</td>
+                    <td>/users/[ID]/[movieTitle]</td>
+                    <td>DELETE</td>
+                    <td>None</td>
+                    <td>
+                        A text message indicating whether the movie was
+                        successfully deleted from favouriteMovies.
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>Allow users to deregister.</td>
+                    <td>/users/[ID]</td>
+                    <td>DELETE</td>
+                    <td>None</td>
+                    <td>
+                        A text message indicating whether the user was
+                        successfully deregistered.
+                    </td>
+                </tr>
+            </tbody>
+        </table>
     </body>
 </html>
