@@ -322,6 +322,25 @@ app.put('/users/:id', (req, res) => {
     }
 });
 
+//Create Express POST route located at the endpoint “/users/:id/:movieTitle”. Allow users to add a movie to favouriteMovies
+app.post('/users/:id/:movieTitle', (req, res) => {
+    const { id, movieTitle } = req.params;
+
+    let user = users.find((user) => {
+        return user.id.toString() === id;
+    });
+
+    if (user) {
+        user.favouriteMovies.push(movieTitle);
+        // res.status(200).json(user);
+        res.status(200).send(
+            `${movieTitle} has been added to user id ${id}'s array.`
+        );
+    } else {
+        res.status(400).send(`There is no such user with id: ${id}.`);
+    }
+});
+
 //Create error-handling middleware function
 app.use((err, req, res, next) => {
     console.error(err.stack);
