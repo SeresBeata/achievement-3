@@ -235,6 +235,24 @@ app.get('/movies', (req, res) => {
     res.status(200).json(movies);
 });
 
+//Create Express GET route located at the endpoint “/movies/:title”. Return a single movie by title.
+app.get('/movies/:title', (req, res) => {
+    const { title } = req.params; //obj destructuring
+    //find a movie by title
+    let movie = movies.find((movie) => {
+        return movie.title === title;
+    });
+    if (movie) {
+        //return the movie if it is found
+        res.status(200).json(movie);
+    } else {
+        //return message if movie is not found
+        res.status(400).send(
+            `Oh sorry...but there is no movie with the title ${title}.`
+        );
+    }
+});
+
 });
 
 //Create error-handling middleware function
