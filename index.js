@@ -25,6 +25,20 @@ app.use('/documentation', express.static(path.join(__dirname, 'public')));
 //Use body-parser middleware to parse incoming request bodies
 app.use(bodyParser.json());
 
+//Create array for users
+let users = [
+    {
+        id: 1,
+        name: 'Kim',
+        favouriteMovies: [],
+    },
+    {
+        id: 2,
+        name: 'Joe',
+        favouriteMovies: ['Back to the Future'],
+    },
+];
+
 //Create array for movies
 let movies = [
     {
