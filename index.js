@@ -22,6 +22,9 @@ app.use(morgan('dev'));
 //Use express.static() to serve “documentation.html” from public folder
 app.use('/documentation', express.static(path.join(__dirname, 'public')));
 
+//Use body-parser middleware to parse incoming request bodies
+app.use(bodyParser.json());
+
 //Create array
 let topMovies = [
     {
