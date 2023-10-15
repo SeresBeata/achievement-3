@@ -49,7 +49,7 @@
             The aim of this project is to build the server-side component of a
             “movie” web application. The purpose of the project to provide users
             with access to information about different movies, directors, and
-            genres. As well ass, to allow to users to sign up, update their
+            genres. As well as, to allow to users to sign up, update their
             personal information, and create a list of their favorite movies.
         </p>
 
@@ -80,8 +80,30 @@
                     <td>None</td>
                     <td>
                         A JSON object holding data about a single movie,
-                        containing a title, year, description, genre, director
-                        and img property.
+                        containing a title, description, genre, releaseDate,
+                        director, imgPath and featured property.
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>Get a list of all movies and their data by genre</td>
+                    <td>/movies/moviebygenres/[genreName]</td>
+                    <td>GET</td>
+                    <td>None</td>
+                    <td>
+                        A JSON object holding data about all the movies with the
+                        specified genre.
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>Get a list of all movies and their data by director</td>
+                    <td>/movies/moviebydirectors/[directorName]</td>
+                    <td>GET</td>
+                    <td>None</td>
+                    <td>
+                        A JSON object holding data about all the movies with the
+                        specified director.
                     </td>
                 </tr>
 
@@ -92,7 +114,7 @@
                     <td>None</td>
                     <td>
                         A JSON object holding data about a single genre,
-                        containing a name and description property.
+                        containing a genreName and genreDescription property.
                     </td>
                 </tr>
 
@@ -103,7 +125,8 @@
                     <td>None</td>
                     <td>
                         A JSON object holding data about a single director,
-                        containing a name, bio, born and death property.
+                        containing a directorName, bio, birth and death
+                        property.
                     </td>
                 </tr>
 
@@ -114,41 +137,44 @@
                     <td>A JSON object holding data about the user to add.</td>
                     <td>
                         A JSON object holding data about the user that was
-                        added, including an id, name and favouriteMovies
-                        property.
+                        added, including an id, username, password, email,
+                        birthday and favouriteMovies property.
                     </td>
                 </tr>
 
                 <tr>
                     <td>Allow users to add a movie to favouriteMovies</td>
-                    <td>/users/[ID]/[movieTitle]</td>
+                    <td>/users/[ID]/[movieID]</td>
                     <td>POST</td>
                     <td>None</td>
                     <td>
-                        A text message indicating whether the movie was
-                        successfully added to favouriteMovies.
+                        A JSON object holding data about the user, including an
+                        id, username, password, email, birthday and the updated
+                        favouriteMovies property.
                     </td>
                 </tr>
 
                 <tr>
-                    <td>Allow users to update username.</td>
+                    <td>Allow users to update their data.</td>
                     <td>/users/[ID]</td>
                     <td>PUT</td>
-                    <td>A JSON object holding data about the new username.</td>
+                    <td>A JSON object holding data about the new data.</td>
                     <td>
-                        A JSON object holding data about the user, including the
-                        id, updated name and favouriteMovies property.
+                        A JSON object holding updated data about the user,
+                        including an id, username, password, email, birthday and
+                        favouriteMovies property.
                     </td>
                 </tr>
 
                 <tr>
                     <td>Allow users to delete a movie from favouriteMovies.</td>
-                    <td>/users/[ID]/[movieTitle]</td>
+                    <td>/users/[ID]/[movieID]</td>
                     <td>DELETE</td>
                     <td>None</td>
                     <td>
-                        A text message indicating whether the movie was
-                        successfully deleted from favouriteMovies.
+                        A JSON object holding data about the user, including an
+                        id, username, password, email, birthday and the updated
+                        favouriteMovies property.
                     </td>
                 </tr>
 
