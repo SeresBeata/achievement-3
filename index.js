@@ -279,6 +279,15 @@ app.route('/users/:id')
         }
         updateUser();
     })
+    .delete(getUserById, async (req, res) => {
+        //Create Express DELETE route located at the endpoint “/users/:id”. Allow users to deregister.
+        const { id } = req.params;
+        try {
+            await User.findByIdAndRemove(id);
+            res.status(200).send(`User ${id} was deleted`);
+        } catch (e) {
+            return res.status(500).send(`error: ${e}`);
+        }
     });
 
 //Create Express POST route located at the endpoint “/users/:id/:movieTitle”. Allow users to add a movie to favouriteMovies
@@ -316,25 +325,6 @@ app.delete('/users/:id/:movieTitle', (req, res) => {
         res.status(200).send(
             `${movieTitle} has been removed from user id ${id}'s array.`
         );
-    } else {
-        res.status(400).send(`There is no such user with id: ${id}.`);
-    }
-});
-
-//Create Express DELETE route located at the endpoint “/users/:id”. Allow users to deregister.
-app.delete('/users/:id', (req, res) => {
-    const { id } = req.params;
-
-    let user = users.find((user) => {
-        return user.id.toString() === id;
-    });
-
-    if (user) {
-        users = users.filter((user) => {
-            return user.id.toString() !== id;
-        });
-        // res.status(200).json(users);
-        res.status(200).send(`User with id ${id} has been deregistered.`);
     } else {
         res.status(400).send(`There is no such user with id: ${id}.`);
     }
