@@ -51,3 +51,10 @@ const userSchema = new mongoose.Schema({
     birthday: Date,
     favouriteMovies: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Movie' }],
 });
+
+//Create models
+const Movie = mongoose.model('Movie', movieSchema);
+const User = mongoose.model('User', userSchema);
+
+//Export models
+module.exports = { Movie, User };
