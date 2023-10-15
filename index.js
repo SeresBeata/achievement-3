@@ -254,22 +254,32 @@ app.post('/users', async (req, res) => {
     createUser();
 });
 
-// Create Express PUT route located at the endpoint “/users/:id”. Allow users to update username.
-app.put('/users/:id', (req, res) => {
-    const { id } = req.params;
-    const updateUser = req.body;
-
-    let user = users.find((user) => {
-        return user.id.toString() === id;
+app.route('/users/:id')
+    .put(getUserById, async (req, res) => {
+        // Create Express PUT route located at the endpoint “/users/:id”. Allow users to update their data.
+        async function updateUser() {
+            const { username, password, email, birthday } = req.body;
+            const { id } = req.params;
+            try {
+                const updateUserById = await User.findByIdAndUpdate(id, {
+                    $set: {
+                        username: username,
+                        password: password,
+                        email: email,
+                        birthday: birthday,
+                    },
+                });
+                if (updateUserById != null) {
+                    const findUpdatedUser = await User.findById(id);
+                    res.status(200).json(findUpdatedUser);
+                }
+            } catch (e) {
+                return res.status(500).send(`error: ${e}`);
+            }
+        }
+        updateUser();
+    })
     });
-
-    if (user) {
-        user.name = updateUser.name;
-        res.status(200).json(user);
-    } else {
-        res.status(400).send(`There is no such user with id: ${id}.`);
-    }
-});
 
 //Create Express POST route located at the endpoint “/users/:id/:movieTitle”. Allow users to add a movie to favouriteMovies
 app.post('/users/:id/:movieTitle', (req, res) => {
