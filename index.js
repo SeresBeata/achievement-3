@@ -100,21 +100,24 @@ app.route('/movies')
     });
 
 //Create Express GET route located at the endpoint “/movies/:title”. Return a single movie by title.
-app.get('/movies/:title', (req, res) => {
-    const { title } = req.params; //obj destructuring
-    //find a movie by title
-    let movie = movies.find((movie) => {
-        return movie.title === title;
-    });
-    if (movie) {
-        //return the movie if it is found
-        res.status(200).json(movie);
-    } else {
-        //return message if movie is not found
-        res.status(400).send(
-            `Oh sorry...but there is no movie with the title ${title}.`
-        );
+app.get('/movies/:title', async (req, res) => {
+    async function getOneMove() {
+        const { title } = req.params;
+        try {
+            const findOneMovie = await Movie.findOne({ title: title });
+            if (findOneMovie != null) {
+                res.status(200).json(findOneMovie);
+            } else {
+                //return message if movie is not found
+                res.status(400).send(
+                    `Oh sorry...but there is no movie with the title ${title}.`
+                );
+            }
+        } catch (err) {
+            return res.status(500).send(`error: ${e}`);
+        }
     }
+    getOneMove();
 });
 
 //Create Express GET route located at the endpoint “/movies/genres/:genreName”. Return data about a genre by it's name.
