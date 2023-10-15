@@ -198,51 +198,52 @@
             <p>Endpoint: <strong>/movies/Anna%20and%20the%20King</strong></p>
             <pre>
               <code>
-                  {
-                      title: 'Anna and the King',
-                      year: '1999',
-                      description:
-                          "The story concerns Anna Leonowens, an English school teacher in Siam during the late 19th century, who becomes the teacher of King Mongkut's many children and wives.",
-                      genre: {
-                          name: 'period drama',
-                          description:
-                              'A film production set in a particular historical period and characterized by the use of costumes, sets, and props that are typical or evocative of the era.',
-                      },
-                      director: {
-                          name: 'Andy Tennant',
-                          bio: ' An American screenwriter, film and television director, actor, and dancer.',
-                          born: '1955',
-                          death: '',
-                      },
-                      img: 'https://upload.wikimedia.org/wikipedia/en/5/5d/Anna_and_the_king.jpg',
-                  }
+                {
+                    "genre": {
+                        "genreName": "Period Drama",
+                        "genreDescription": "A film production set in a particular historical period and characterized by the use of costumes, sets, and props that are typical or evocative of the era."
+                    },
+                    "director": {
+                        "directorName": "Andy Tennant",
+                        "bio": "An American screenwriter, film and television director, actor, and dancer.",
+                        "birth": "1955-06-15T00:00:00.000Z",
+                        "death": null
+                    },
+                    "_id": "652be1b30cbb884054d2291b",
+                    "title": "Anna and the King",
+                    "description": "The story concerns Anna Leonowens, an English school teacher in Siam during the late 19th century, who becomes the teacher of King Mongkut's many children and wives.",
+                    "releaseDate": "2000-01-27T00:00:00.000Z",
+                    "imagePath": "https://upload.wikimedia.org/wikipedia/en/5/5d/Anna_and_the_king.jpg",
+                    "featured": false,
+                    "__v": 0
+                }
               </code>
             </pre>
 
-            <h3>Get data about a single genre "science fiction"</h3>
-            <p>Endpoint: <strong>/movies/genres/science%20fiction</strong></p>
+            <h3>Get data about a single genre "Period Drama"</h3>
+            <p>Endpoint: <strong>/movies/genres/Period%20Drama</strong></p>
             <pre>
               <code>
-                  {
-                      "name": "science fiction",
-                      "description": "Science fiction (or sci-fi) is a film genre that uses speculative, fictional science-based depictions of phenomena."
-                  }
+                {
+                    "genreName": "Period Drama",
+                    "genreDescription": "A film production set in a particular historical period and characterized by the use of costumes, sets, and props that are typical or evocative of the era."
+                }
               </code>
             </pre>
 
-            <h3>Get data about a single director "George Lucas"</h3>
+            <h3>Get data about a single director "Andy Tennant"</h3>
             <p>
                 Endpoint:
-                <strong>/movies/directors/George%20Lucas</strong>
+                <strong>/movies/directors/Andy%20Tennant</strong>
             </p>
             <pre>
               <code>
-                  {
-                      "name": "George Lucas",
-                      "bio": " An American film and television director, writer and producer.",
-                      "born": "1944",
-                      "death": ""
-                  }
+                {
+                    "directorName": "Andy Tennant",
+                    "bio": "An American screenwriter, film and television director, actor, and dancer.",
+                    "birth": "1955-06-15T00:00:00.000Z",
+                    "death": null
+                }
               </code>
             </pre>
 
@@ -254,76 +255,111 @@
             <p>A JSON object holding data about the user to add:</p>
             <pre>
               <code>
-                  {
-                      "name": "Rikki",
-                      "favouriteMovies": [],
-                  }
+                {
+                    "username": "Johann",
+                    "password": "johanna123",
+                    "email": "johanna@example.com",
+                    "birthday": "1995-12-22",
+                    "favouriteMovies": []
+                }
               </code>
             </pre>
             <p>A JSON object holding data about the user that was added:</p>
             <pre>
               <code>
-                  {
-                      "name": "Rikki",
-                      "favouriteMovies": [],
-                      "id": "678a3fc4-b511-454e-87bd-86d8ee0c4f27"
-                  }
+                {
+                    "username": "Johann",
+                    "password": "johanna123",
+                    "email": "johanna@example.com",
+                    "birthday": "1995-12-22T00:00:00.000Z",
+                    "favouriteMovies": [],
+                    "_id": "652c0b56ff9ec9f063b4649f",
+                    "__v": 0
+                }
               </code>
             </pre>
 
-            <h3>
-                Allow users to add the movie "Anna and the King" to
-                "favouriteMovies"
-            </h3>
-            <p>Endpoint: <strong>/users/1/Anna%20and%20the%20King</strong></p>
+            <h3>Allow users to add the movie by ID to "favouriteMovies"</h3>
+            <p>
+                Endpoint:
+                <strong
+                    >/users/652bfcc087f7885adcb8de96/652be1b30cbb884054d2291b</strong
+                >
+            </p>
             <pre>
               <code>
-                  "Anna and the King has been added to user id 1's array.""
+                {
+                    "_id": "652bfcc087f7885adcb8de96",
+                    "username": "Lucy",
+                    "password": "lucy789",
+                    "email": "lucy@example.com",
+                    "birthday": "2001-11-11T00:00:00.000Z",
+                    "favouriteMovies": [
+                        "652be1b30cbb884054d2291b"
+                    ],
+                    "__v": 0
+                }
               </code>
             </pre>
 
             <h3>Allow users to update username</h3>
             <p>
                 Endpoint:
-                <strong>/users/1</strong>
+                <strong
+                    >http://localhost:3000/users/652c0b56ff9ec9f063b4649f</strong
+                >
             </p>
             <p>A JSON object holding data about the new username.:</p>
             <pre>
               <code>
                   {
-                      "name": "Mary"
+                      "username": "Hanna"
                   }
               </code>
             </pre>
             <p>A JSON object holding data about the user:</p>
             <pre>
               <code>
-                  {
-                      "id": 1,
-                      "name": "Mary",
-                      "favouriteMovies": [
-                          "Anna and the King"
-                      ]
-                  }
+                {
+                    "_id": "652c0b56ff9ec9f063b4649f",
+                    "username": "Hanna",
+                    "password": "johanna123",
+                    "email": "johanna@example.com",
+                    "birthday": "1995-12-22T00:00:00.000Z",
+                    "favouriteMovies": [],
+                    "__v": 0
+                }
               </code>
             </pre>
 
             <h3>
-                Allow users to delete the movie "Anna and the King" from
-                "favouriteMovies"
+                Allow users to delete the movie by ID from "favouriteMovies"
             </h3>
-            <p>Endpoint: <strong>/users/1/Anna%20and%20the%20King</strong></p>
+            <p>
+                Endpoint:
+                <strong
+                    >/users/652bfcc087f7885adcb8de96/652be1b30cbb884054d2291b</strong
+                >
+            </p>
             <pre>
               <code>
-                  "Anna and the King has been removed from user id 1's array."
+                {
+                    "_id": "652bfcc087f7885adcb8de96",
+                    "username": "Lucy",
+                    "password": "lucy789",
+                    "email": "lucy@example.com",
+                    "birthday": "2001-11-11T00:00:00.000Z",
+                    "favouriteMovies": [],
+                    "__v": 0
+                }
               </code>
             </pre>
 
             <h3>Allow users to deregister</h3>
-            <p>Endpoint: <strong>/users/1/</strong></p>
+            <p>Endpoint: <strong>/users/652c0b56ff9ec9f063b4649f</strong></p>
             <pre>
               <code>
-                  "User with id 1 has been deregistered."
+                  "User 652c0b56ff9ec9f063b4649f was deleted"
               </code>
             </pre>
         </section>
