@@ -4,7 +4,10 @@ const express = require('express'),
     fs = require('fs'), // Require Node module fs
     path = require('path'), // Require Node module path
     bodyParser = require('body-parser'), //Require body-parser
+    mongoose = require('mongoose'), //Require Mongoose
     uuid = require('uuid'); //Require UUID
+//Require models
+const { Movie, User } = require('./models/models');
 //Declare variable that encapsulates Express’s functionality
 const app = express();
 //Server Port
@@ -24,6 +27,12 @@ app.use('/documentations', express.static(path.join(__dirname, 'public')));
 
 //Use body-parser middleware to parse incoming request bodies
 app.use(bodyParser.json());
+
+//Require dotenv
+require('dotenv').config();
+
+//Connect to DB - use dotenv to not expose data
+mongoose.connect(process.env.CONNECTION_URI);
 
 //Create array for users
 let users = [
