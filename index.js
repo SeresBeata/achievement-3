@@ -290,24 +290,6 @@ app.route('/users/:id')
         }
     });
 
-//Create Express POST route located at the endpoint “/users/:id/:movieTitle”. Allow users to add a movie to favouriteMovies
-app.post('/users/:id/:movieTitle', (req, res) => {
-    const { id, movieTitle } = req.params;
-
-    let user = users.find((user) => {
-        return user.id.toString() === id;
-    });
-
-    if (user) {
-        user.favouriteMovies.push(movieTitle);
-        // res.status(200).json(user);
-        res.status(200).send(
-            `${movieTitle} has been added to user id ${id}'s array.`
-        );
-    } else {
-        res.status(400).send(`There is no such user with id: ${id}.`);
-    }
-});
 
 //Create Express DELETE route located at the endpoint “/users/:id/:movieTitle”. Allow users to delete a movie from favoriteMovies
 app.delete('/users/:id/:movieTitle', (req, res) => {
@@ -315,6 +297,35 @@ app.delete('/users/:id/:movieTitle', (req, res) => {
 
     let user = users.find((user) => {
         return user.id.toString() === id;
+app.route('/users/:id/:movieId')
+    .post(getUserById, async (req, res) => {
+        //Create Express POST route located at the endpoint “/users/:id/:movieId”. Allow users to add a movie to favouriteMovies
+        async function addFavMovie() {
+            const { id, movieId } = req.params;
+            try {
+                const findTheMovie = await Movie.findById(movieId);
+
+                if (findTheMovie != null) {
+                    const updateUserById = await User.findByIdAndUpdate(id, {
+                        $addToSet: {
+                            favouriteMovies: movieId,
+                        },
+                    });
+                    if (updateUserById != null) {
+                        const findUpdatedUser = await User.findById(id);
+                        res.status(200).json(findUpdatedUser);
+                    }
+                } else {
+                    res.status(400).send(
+                        `Oh sorry...but there is no movie with the id ${id}.`
+                    );
+                }
+            } catch (e) {
+                return res.status(500).send(`error: ${e}`);
+            }
+        }
+        addFavMovie();
+    })
     });
 
     if (user) {
