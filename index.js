@@ -43,11 +43,21 @@ app.get('/', (req, res) => {
     // console.log('CONNCECTION_URI: ' + process.env.CONNECTION_URI);
 });
 
-//Create Express GET route located at the endpoint “/movies”. Return a list of ALL movies.
-app.get('/movies', (req, res) => {
-    //return status code and JSON obj
-    res.status(200).json(movies);
-});
+//MOVIE ROUTES --------------------------------------------------------------------------
+
+app.route('/movies')
+    .get(async (req, res) => {
+        //Create Express GET route located at the endpoint “/movies”. Return a list of ALL movies.
+        async function getAllMovies() {
+            try {
+                const findAllMovies = await Movie.find();
+                res.status(200).json(findAllMovies);
+            } catch (e) {
+                res.status(500).send(`error: ${e}`);
+            }
+        }
+        getAllMovies();
+    })
 
 //Create Express GET route located at the endpoint “/movies/:title”. Return a single movie by title.
 app.get('/movies/:title', (req, res) => {
