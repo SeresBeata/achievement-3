@@ -203,22 +203,28 @@ app.get('/movies/moviesbydirectors/:directorName', async (req, res) => {
 });
 
 //Create Express GET route located at the endpoint “/movies/directors/:directorName”. Return data about a director by name.
-app.get('/movies/directors/:directorName', (req, res) => {
-    const { directorName } = req.params; //obj destructuring
-    //find a director by name
-    let directorInMovies = movies.find((movie) => {
-        return movie.director.name === directorName;
-    });
-    if (directorInMovies) {
-        //return the data if director is found
-        let director = directorInMovies.director;
-        res.status(200).json(director);
-    } else {
-        //return message if director is not found
-        res.status(400).send(
-            `Oh sorry...but there is no director with the name ${directorName}.`
-        );
+app.get('/movies/directors/:directorName', async (req, res) => {
+    async function findDirector() {
+        const { directorName } = req.params;
+        try {
+            const findOneDirector = await Movie.findOne({
+                'director.directorName': directorName,
+            });
+
+            if (findOneDirector != null) {
+                res.status(200).json(findOneDirector.director);
+            } else {
+                //return message if director is not found
+                res.status(400).send(
+                    `Oh sorry...but there is no director with the name ${directorName}.`
+                );
+            }
+        } catch (e) {
+            return res.status(500).send(`error: ${e}`);
+        }
     }
+
+    findDirector();
 });
 
 //Create Express POST route located at the endpoint “/users”. Allow new users to register.
