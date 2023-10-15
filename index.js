@@ -227,18 +227,31 @@ app.get('/movies/directors/:directorName', async (req, res) => {
     findDirector();
 });
 
-//Create Express POST route located at the endpoint “/users”. Allow new users to register.
-app.post('/users', (req, res) => {
-    const newUser = req.body;
+//USER ROUTES --------------------------------------------------------------------------
 
-    if (!newUser.name) {
-        const message = 'Missing name in request body';
-        res.status(400).send(message);
-    } else {
-        newUser.id = uuid.v4();
-        users.push(newUser);
-        res.status(201).send(newUser);
+//Create Express POST route located at the endpoint “/users”. Allow new users to register.
+app.post('/users', async (req, res) => {
+    async function createUser() {
+        const { username, password, email, birthday, favouriteMovies } =
+            req.body;
+
+        const createNewUser = new User({
+            username: username,
+            password: password,
+            email: email,
+            birthday: birthday,
+            favouriteMovies: favouriteMovies,
+        });
+
+        try {
+            await createNewUser.save();
+            res.status(201).json(createNewUser);
+        } catch (e) {
+            console.log(e);
+            res.status(400).send(`error: ${e}`);
+        }
     }
+    createUser();
 });
 
 // Create Express PUT route located at the endpoint “/users/:id”. Allow users to update username.
