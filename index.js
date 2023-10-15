@@ -120,6 +120,35 @@ app.get('/movies/:title', async (req, res) => {
     getOneMove();
 });
 
+//Create Express GET route located at the endpoint “/movies/moviesbygenres/:genreName”. Return movies by genre.
+app.get('/movies/moviesbygenres/:genreName', async (req, res) => {
+    async function getMoviesByGenre() {
+        const { genreName } = req.params;
+        try {
+            const findGenre = await Movie.findOne({
+                'genre.genreName': genreName,
+            });
+
+            if (findGenre != null) {
+                const findMovieByGenre = await Movie.find({
+                    'genre.genreName': genreName,
+                });
+                if (findMovieByGenre != null) {
+                    res.status(200).json(findMovieByGenre);
+                }
+            } else {
+                //return message if movie is not found
+                res.status(400).send(
+                    `Oh sorry...but there is no movie with the genre ${genreName}.`
+                );
+            }
+        } catch (e) {
+            return res.status(500).send(`error: ${e}`);
+        }
+    }
+    getMoviesByGenre();
+});
+
 //Create Express GET route located at the endpoint “/movies/genres/:genreName”. Return data about a genre by it's name.
 app.get('/movies/genres/:genreName', (req, res) => {
     const { genreName } = req.params; //obj destructuring
