@@ -25,8 +25,9 @@ app.use(morgan('dev'));
 //Use express.static() to serve “documentation.html” from public folder
 app.use('/documentations', express.static(path.join(__dirname, 'public')));
 
-//Use body-parser middleware to parse incoming request bodies
+//Use body-parser middleware to parse incoming request bodies. Parse JSON and URL-encoded data.
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 //Require dotenv
 require('dotenv').config();
