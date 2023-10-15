@@ -290,13 +290,6 @@ app.route('/users/:id')
         }
     });
 
-
-//Create Express DELETE route located at the endpoint “/users/:id/:movieTitle”. Allow users to delete a movie from favoriteMovies
-app.delete('/users/:id/:movieTitle', (req, res) => {
-    const { id, movieTitle } = req.params;
-
-    let user = users.find((user) => {
-        return user.id.toString() === id;
 app.route('/users/:id/:movieId')
     .post(getUserById, async (req, res) => {
         //Create Express POST route located at the endpoint “/users/:id/:movieId”. Allow users to add a movie to favouriteMovies
@@ -326,20 +319,34 @@ app.route('/users/:id/:movieId')
         }
         addFavMovie();
     })
-    });
+    .delete(getUserById, async (req, res) => {
+        //Create Express DELETE route located at the endpoint “/users/:id/:movieId”. Allow users to delete a movie from favoriteMovies
+        async function delFavMovie() {
+            const { id, movieId } = req.params;
+            try {
+                const findTheMovie = await Movie.findById(movieId);
 
-    if (user) {
-        user.favouriteMovies = user.favouriteMovies.filter((title) => {
-            return title !== movieTitle;
-        });
-        // res.status(200).json(user);
-        res.status(200).send(
-            `${movieTitle} has been removed from user id ${id}'s array.`
-        );
-    } else {
-        res.status(400).send(`There is no such user with id: ${id}.`);
-    }
-});
+                if (findTheMovie != null) {
+                    const updateUserById = await User.findByIdAndUpdate(id, {
+                        $pull: {
+                            favouriteMovies: movieId,
+                        },
+                    });
+                    if (updateUserById != null) {
+                        const findUpdatedUser = await User.findById(id);
+                        res.status(200).json(findUpdatedUser);
+                    }
+                } else {
+                    res.status(400).send(
+                        `Oh sorry...but there is no movie with the id ${id}.`
+                    );
+                }
+            } catch (e) {
+                return res.status(500).send(`error: ${e}`);
+            }
+        }
+        delFavMovie();
+    });
 
 //Create middleware to find User by id
 async function getUserById(req, res, next) {
