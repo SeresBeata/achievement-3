@@ -39,6 +39,8 @@ mongoose.connect(process.env.CONNECTION_URI);
 app.get('/', (req, res) => {
     //return textual response
     res.send('Welcome to my Movie App!');
+    //Confirm, if dotenv module works properly
+    // console.log('CONNCECTION_URI: ' + process.env.CONNECTION_URI);
 });
 
 //Create Express GET route located at the endpoint “/movies”. Return a list of ALL movies.
