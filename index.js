@@ -330,6 +330,24 @@ app.delete('/users/:id', (req, res) => {
     }
 });
 
+//Create middleware to find User by id
+async function getUserById(req, res, next) {
+    let userById;
+    try {
+        userById = await User.findById(req.params.id);
+        if (userById == null) {
+            return res
+                .status(404)
+                .send(`Cannot find user with this id ${req.params.id}.`);
+        }
+    } catch (e) {
+        return res.status(500).send(`error: ${e}`);
+    }
+
+    res.userById = userById;
+    next();
+}
+
 //Create error-handling middleware function
 app.use((err, req, res, next) => {
     console.error(err.stack);
