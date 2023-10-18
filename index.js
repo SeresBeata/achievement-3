@@ -353,38 +353,54 @@ app.route('/users/:id')
     });
 
 app.route('/users/:id/:movieId')
-    .post(getUserById, async (req, res) => {
-        //Create Express POST route located at the endpoint “/users/:id/:movieId”. Allow users to add a movie to favouriteMovies
-        async function addFavMovie() {
-            const { id, movieId } = req.params;
-            try {
-                const findTheMovie = await Movie.findById(movieId);
-
-                if (findTheMovie != null) {
-                    const updateUserById = await User.findByIdAndUpdate(id, {
-                        $addToSet: {
-                            favouriteMovies: movieId,
-                        },
-                    });
-                    if (updateUserById != null) {
-                        const findUpdatedUser = await User.findById(id);
-                        await findUpdatedUser.populate(
-                            'favouriteMovies',
-                            'title'
-                        );
-                        res.status(200).json(findUpdatedUser);
-                    }
-                } else {
-                    res.status(400).send(
-                        `Oh sorry...but there is no movie with the id ${id}.`
-                    );
+    .post(
+        passport.authenticate('jwt', { session: false }),
+        getUserById,
+        async (req, res) => {
+            //Create Express POST route located at the endpoint “/users/:id/:movieId”. Allow users to add a movie to favouriteMovies
+            async function addFavMovie() {
+                const { id, movieId } = req.params;
+                // CONDITION TO CHECK: makes sure that the username in the request body matches the one in the DB.
+                const checkUserName = await User.findOne({
+                    _id: id,
+                });
+                console.log(checkUserName.username);
+                if (req.user.username !== checkUserName.username) {
+                    return res.status(400).send('Permission denied');
                 }
-            } catch (e) {
-                return res.status(500).send(`error: ${e}`);
+                // CONDITION ENDS
+                try {
+                    const findTheMovie = await Movie.findById(movieId);
+
+                    if (findTheMovie != null) {
+                        const updateUserById = await User.findByIdAndUpdate(
+                            id,
+                            {
+                                $addToSet: {
+                                    favouriteMovies: movieId,
+                                },
+                            }
+                        );
+                        if (updateUserById != null) {
+                            const findUpdatedUser = await User.findById(id);
+                            await findUpdatedUser.populate(
+                                'favouriteMovies',
+                                'title'
+                            );
+                            res.status(200).json(findUpdatedUser);
+                        }
+                    } else {
+                        res.status(400).send(
+                            `Oh sorry...but there is no movie with the id ${id}.`
+                        );
+                    }
+                } catch (e) {
+                    return res.status(500).send(`error: ${e}`);
+                }
             }
+            addFavMovie();
         }
-        addFavMovie();
-    })
+    )
     .delete(getUserById, async (req, res) => {
         //Create Express DELETE route located at the endpoint “/users/:id/:movieId”. Allow users to delete a movie from favoriteMovies
         async function delFavMovie() {
