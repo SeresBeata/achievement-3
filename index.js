@@ -255,6 +255,11 @@ app.post('/users', async (req, res) => {
 });
 
 app.route('/users/:id')
+    .get(getUserById, async (req, res) => {
+        //Create Express GET route located at the endpoint “/users/:id”. Return data about a user by id.
+        await res.userById.populate('favouriteMovies', 'title');
+        res.json(res.userById);
+    })
     .put(getUserById, async (req, res) => {
         // Create Express PUT route located at the endpoint “/users/:id”. Allow users to update their data.
         async function updateUser() {
