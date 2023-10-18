@@ -300,31 +300,47 @@ app.route('/users/:id')
             res.json(res.userById);
         }
     )
-    .put(getUserById, async (req, res) => {
-        // Create Express PUT route located at the endpoint “/users/:id”. Allow users to update their data.
-        async function updateUser() {
-            const { username, password, email, birthday } = req.body;
-            const { id } = req.params;
-            try {
-                const updateUserById = await User.findByIdAndUpdate(id, {
-                    $set: {
-                        username: username,
-                        password: password,
-                        email: email,
-                        birthday: birthday,
-                    },
+    .put(
+        passport.authenticate('jwt', { session: false }),
+        getUserById,
+        async (req, res) => {
+            // Create Express PUT route located at the endpoint “/users/:id”. Allow users to update their data.
+            async function updateUser() {
+                const { username, password, email, birthday } = req.body;
+                const { id } = req.params;
+                // CONDITION TO CHECK: makes sure that the username in the request body matches the one in the DB.
+                const checkUserName = await User.findOne({
+                    _id: id,
                 });
-                if (updateUserById != null) {
-                    const findUpdatedUser = await User.findById(id);
-                    await findUpdatedUser.populate('favouriteMovies', 'title');
-                    res.status(200).json(findUpdatedUser);
+                console.log(checkUserName.username);
+                if (req.user.username !== checkUserName.username) {
+                    return res.status(400).send('Permission denied');
                 }
-            } catch (e) {
-                return res.status(500).send(`error: ${e}`);
+                // CONDITION ENDS
+                try {
+                    const updateUserById = await User.findByIdAndUpdate(id, {
+                        $set: {
+                            username: username,
+                            password: password,
+                            email: email,
+                            birthday: birthday,
+                        },
+                    });
+                    if (updateUserById != null) {
+                        const findUpdatedUser = await User.findById(id);
+                        await findUpdatedUser.populate(
+                            'favouriteMovies',
+                            'title'
+                        );
+                        res.status(200).json(findUpdatedUser);
+                    }
+                } catch (e) {
+                    return res.status(500).send(`error: ${e}`);
+                }
             }
+            updateUser();
         }
-        updateUser();
-    })
+    )
     .delete(getUserById, async (req, res) => {
         //Create Express DELETE route located at the endpoint “/users/:id”. Allow users to deregister.
         const { id } = req.params;
