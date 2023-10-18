@@ -344,6 +344,10 @@ app.route('/users/:id/:movieId')
                     });
                     if (updateUserById != null) {
                         const findUpdatedUser = await User.findById(id);
+                        await findUpdatedUser.populate(
+                            'favouriteMovies',
+                            'title'
+                        );
                         res.status(200).json(findUpdatedUser);
                     }
                 } else {
