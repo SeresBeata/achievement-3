@@ -131,33 +131,37 @@ app.get(
 );
 
 //Create Express GET route located at the endpoint “/movies/moviesbygenres/:genreName”. Return movies by genre.
-app.get('/movies/moviesbygenres/:genreName', async (req, res) => {
-    async function getMoviesByGenre() {
-        const { genreName } = req.params;
-        try {
-            const findGenre = await Movie.findOne({
-                'genre.genreName': genreName,
-            });
-
-            if (findGenre != null) {
-                const findMovieByGenre = await Movie.find({
+app.get(
+    '/movies/moviesbygenres/:genreName',
+    passport.authenticate('jwt', { session: false }),
+    async (req, res) => {
+        async function getMoviesByGenre() {
+            const { genreName } = req.params;
+            try {
+                const findGenre = await Movie.findOne({
                     'genre.genreName': genreName,
                 });
-                if (findMovieByGenre != null) {
-                    res.status(200).json(findMovieByGenre);
+
+                if (findGenre != null) {
+                    const findMovieByGenre = await Movie.find({
+                        'genre.genreName': genreName,
+                    });
+                    if (findMovieByGenre != null) {
+                        res.status(200).json(findMovieByGenre);
+                    }
+                } else {
+                    //return message if movie is not found
+                    res.status(400).send(
+                        `Oh sorry...but there is no movie with the genre ${genreName}.`
+                    );
                 }
-            } else {
-                //return message if movie is not found
-                res.status(400).send(
-                    `Oh sorry...but there is no movie with the genre ${genreName}.`
-                );
+            } catch (e) {
+                return res.status(500).send(`error: ${e}`);
             }
-        } catch (e) {
-            return res.status(500).send(`error: ${e}`);
         }
+        getMoviesByGenre();
     }
-    getMoviesByGenre();
-});
+);
 
 //Create Express GET route located at the endpoint “/movies/genres/:genreName”. Return data about a genre by it's name.
 app.get('/movies/genres/:genreName', async (req, res) => {
