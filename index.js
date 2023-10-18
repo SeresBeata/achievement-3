@@ -164,28 +164,32 @@ app.get(
 );
 
 //Create Express GET route located at the endpoint “/movies/genres/:genreName”. Return data about a genre by it's name.
-app.get('/movies/genres/:genreName', async (req, res) => {
-    async function genreInMovies() {
-        const { genreName } = req.params;
-        try {
-            const findGenre = await Movie.findOne({
-                'genre.genreName': genreName,
-            });
+app.get(
+    '/movies/genres/:genreName',
+    passport.authenticate('jwt', { session: false }),
+    async (req, res) => {
+        async function genreInMovies() {
+            const { genreName } = req.params;
+            try {
+                const findGenre = await Movie.findOne({
+                    'genre.genreName': genreName,
+                });
 
-            if (findGenre != null) {
-                res.status(200).json(findGenre.genre);
-            } else {
-                //return message if genre is not found
-                res.status(400).send(
-                    `Oh sorry...but there is no genre with the name ${genreName}.`
-                );
+                if (findGenre != null) {
+                    res.status(200).json(findGenre.genre);
+                } else {
+                    //return message if genre is not found
+                    res.status(400).send(
+                        `Oh sorry...but there is no genre with the name ${genreName}.`
+                    );
+                }
+            } catch (e) {
+                return res.status(500).send(`error: ${e}`);
             }
-        } catch (e) {
-            return res.status(500).send(`error: ${e}`);
         }
+        genreInMovies();
     }
-    genreInMovies();
-});
+);
 
 //Create Express GET route located at the endpoint “/movies/moviesbydirector/:directorName”. Return movies by director.
 app.get('/movies/moviesbydirectors/:directorName', async (req, res) => {
