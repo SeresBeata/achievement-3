@@ -281,11 +281,25 @@ app.post('/users', async (req, res) => {
 });
 
 app.route('/users/:id')
-    .get(getUserById, async (req, res) => {
-        //Create Express GET route located at the endpoint “/users/:id”. Return data about a user by id.
-        await res.userById.populate('favouriteMovies', 'title');
-        res.json(res.userById);
-    })
+    .get(
+        passport.authenticate('jwt', { session: false }),
+        getUserById,
+        async (req, res) => {
+            //Create Express GET route located at the endpoint “/users/:id”. Return data about a user by id.
+            // CONDITION TO CHECK: makes sure that the username in the request body matches the one in the DB.
+            const { id } = req.params;
+            const checkUserName = await User.findOne({
+                _id: id,
+            });
+            console.log(checkUserName.username);
+            if (req.user.username !== checkUserName.username) {
+                return res.status(400).send('Permission denied');
+            }
+            // CONDITION ENDS
+            await res.userById.populate('favouriteMovies', 'title');
+            res.json(res.userById);
+        }
+    )
     .put(getUserById, async (req, res) => {
         // Create Express PUT route located at the endpoint “/users/:id”. Allow users to update their data.
         async function updateUser() {
