@@ -341,16 +341,29 @@ app.route('/users/:id')
             updateUser();
         }
     )
-    .delete(getUserById, async (req, res) => {
-        //Create Express DELETE route located at the endpoint “/users/:id”. Allow users to deregister.
-        const { id } = req.params;
-        try {
-            await User.findByIdAndRemove(id);
-            res.status(200).send(`User ${id} was deleted`);
-        } catch (e) {
-            return res.status(500).send(`error: ${e}`);
+    .delete(
+        passport.authenticate('jwt', { session: false }),
+        getUserById,
+        async (req, res) => {
+            //Create Express DELETE route located at the endpoint “/users/:id”. Allow users to deregister.
+            const { id } = req.params;
+            // CONDITION TO CHECK: makes sure that the username in the request body matches the one in the DB.
+            const checkUserName = await User.findOne({
+                _id: id,
+            });
+            console.log(checkUserName.username);
+            if (req.user.username !== checkUserName.username) {
+                return res.status(400).send('Permission denied');
+            }
+            // CONDITION ENDS
+            try {
+                await User.findByIdAndRemove(id);
+                res.status(200).send(`User ${id} was deleted`);
+            } catch (e) {
+                return res.status(500).send(`error: ${e}`);
+            }
         }
-    });
+    );
 
 app.route('/users/:id/:movieId')
     .post(
