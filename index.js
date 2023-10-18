@@ -32,6 +32,12 @@ app.use(bodyParser.urlencoded({ extended: true }));
 //Require dotenv
 require('dotenv').config();
 
+//Require auth.js, passport.js file, as well passport module
+const setupLoginRoute = require('./auth');
+setupLoginRoute(app); //Use 'app' argument to ensure that Express is available in auth.js file as well.
+const passport = require('passport');
+require('./passport');
+
 //Connect to DB - use dotenv to not expose data
 mongoose.connect(process.env.CONNECTION_URI);
 
