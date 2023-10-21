@@ -1,5 +1,6 @@
 //Require Mongoose
-const mongoose = require('mongoose');
+const mongoose = require('mongoose'),
+    bcrypt = require('bcrypt');
 
 //Create schemas
 const movieSchema = new mongoose.Schema({
