@@ -281,17 +281,27 @@ app.post('/users', async (req, res) => {
         const { username, password, email, birthday, favouriteMovies } =
             req.body;
 
-        const createNewUser = new User({
-            username: username,
-            password: password,
-            email: email,
-            birthday: birthday,
-            favouriteMovies: favouriteMovies,
-        });
+        let hashedPassword = User.hashPassword(password);
 
         try {
-            await createNewUser.save();
-            res.status(201).json(createNewUser);
+            const existUserCheck = await User.findOne({
+                username: username,
+            });
+
+            if (existUserCheck != null) {
+                return res.status(400).send(username + ' already exists');
+            } else {
+                const createNewUser = new User({
+                    username: username,
+                    password: hashedPassword,
+                    email: email,
+                    birthday: birthday,
+                    favouriteMovies: favouriteMovies,
+                });
+
+                await createNewUser.save();
+                res.status(201).json(createNewUser);
+            }
         } catch (e) {
             console.log(e);
             res.status(400).send(`error: ${e}`);
