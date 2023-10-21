@@ -73,8 +73,9 @@ app.get('/', (req, res) => {
 
 //MOVIE ROUTES --------------------------------------------------------------------------
 
-app.route('/movies')
-    .get(passport.authenticate('jwt', { session: false }), async (req, res) => {
+app.route('/movies').get(
+    passport.authenticate('jwt', { session: false }),
+    async (req, res) => {
         //Create Express GET route located at the endpoint “/movies”. Return a list of ALL movies.
         async function getAllMovies() {
             try {
@@ -85,47 +86,48 @@ app.route('/movies')
             }
         }
         getAllMovies();
-    })
-    .post(async (req, res) => {
-        //Create Express POST route located at the endpoint “/movies”. Create a movie.
-        async function createMovie() {
-            const {
-                title,
-                description,
-                genre,
-                releaseDate,
-                director,
-                imagePath,
-                featured,
-            } = req.body;
+    }
+);
+// .post(async (req, res) => {
+//     //Create Express POST route located at the endpoint “/movies”. Create a movie.
+//     async function createMovie() {
+//         const {
+//             title,
+//             description,
+//             genre,
+//             releaseDate,
+//             director,
+//             imagePath,
+//             featured,
+//         } = req.body;
 
-            const newMovie = new Movie({
-                title: title,
-                description: description,
-                genre: {
-                    genreName: genre.genreName,
-                    genreDescription: genre.genreDescription,
-                },
-                releaseDate: releaseDate,
-                director: {
-                    directorName: director.directorName,
-                    bio: director.bio,
-                    birth: director.birth,
-                    death: director.death,
-                },
-                imagePath: imagePath,
-                featured: featured,
-            });
-            try {
-                await newMovie.save();
-                res.status(201).json(newMovie);
-            } catch (e) {
-                console.log(e);
-                res.status(400).send(`error: ${e}`);
-            }
-        }
-        createMovie();
-    });
+//         const newMovie = new Movie({
+//             title: title,
+//             description: description,
+//             genre: {
+//                 genreName: genre.genreName,
+//                 genreDescription: genre.genreDescription,
+//             },
+//             releaseDate: releaseDate,
+//             director: {
+//                 directorName: director.directorName,
+//                 bio: director.bio,
+//                 birth: director.birth,
+//                 death: director.death,
+//             },
+//             imagePath: imagePath,
+//             featured: featured,
+//         });
+//         try {
+//             await newMovie.save();
+//             res.status(201).json(newMovie);
+//         } catch (e) {
+//             console.log(e);
+//             res.status(400).send(`error: ${e}`);
+//         }
+//     }
+//     createMovie();
+// });
 
 //Create Express GET route located at the endpoint “/movies/:title”. Return a single movie by title.
 app.get(
