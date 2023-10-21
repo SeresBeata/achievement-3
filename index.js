@@ -360,9 +360,42 @@ app.route('/users/:id')
     .put(
         passport.authenticate('jwt', { session: false }),
         getUserById,
+        //Use express-validator for input validation
+        [
+            check(
+                'username',
+                'Username is required. Username must be at least 5 characters.'
+            )
+                .isLength({ min: 5 })
+                .optional({ checkFalsy: true }),
+            check(
+                'username',
+                'Username contains non alphanumeric characters - not allowed.'
+            )
+                .isAlphanumeric()
+                .optional({ checkFalsy: true }),
+            check(
+                'password',
+                'Password must be at least 5 and maximum 10 charachters.'
+            )
+                .isLength({ min: 5, max: 10 })
+                .optional({ checkFalsy: true }),
+            check('email', 'Email does not appear to be valid')
+                .isEmail()
+                .optional({ checkFalsy: true }),
+            check('birthday').isDate().optional({ checkFalsy: true }),
+        ],
         async (req, res) => {
             // Create Express PUT route located at the endpoint “/users/:id”. Allow users to update their data.
             async function updateUser() {
+                // check the validation object for errors
+                let errors = validationResult(req);
+
+                if (!errors.isEmpty()) {
+                    return res.status(422).json({ errors: errors.array() });
+                }
+                //End: check the validation object for errors
+
                 const { username, password, email, birthday } = req.body;
                 const { id } = req.params;
                 // CONDITION TO CHECK: makes sure that the username in the request body matches the one in the DB.
