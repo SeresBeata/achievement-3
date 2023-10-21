@@ -7,6 +7,8 @@ const express = require('express'),
     mongoose = require('mongoose'), //Require Mongoose
     cors = require('cors'),
     uuid = require('uuid'); //Require UUID
+//Require express-validator
+const { check, validationResult } = require('express-validator');
 //Require models
 const { Movie, User } = require('./models/models');
 //Declare variable that encapsulates Express’s functionality
