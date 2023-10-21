@@ -52,6 +52,20 @@ const userSchema = new mongoose.Schema({
     favouriteMovies: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Movie' }],
 });
 
+//Hash submitted passwords with bcrypt
+userSchema.statics.hashPassword = (password) => {
+    return bcrypt.hashSync(password, 10);
+};
+
+//Compare submitted passwords with bcrypt
+userSchema.methods.validatePassword = function (password) {
+    console.log(`validating password ${password}`);
+    console.log(JSON.stringify(this));
+    const success = bcrypt.compareSync(password, this.password);
+    console.log(`password validated`);
+    return success;
+};
+
 //Create models
 const Movie = mongoose.model('Movie', movieSchema);
 const User = mongoose.model('User', userSchema);
