@@ -278,39 +278,64 @@ app.get(
 //USER ROUTES --------------------------------------------------------------------------
 
 //Create Express POST route located at the endpoint “/users”. Allow new users to register.
-app.post('/users', async (req, res) => {
-    async function createUser() {
-        const { username, password, email, birthday, favouriteMovies } =
-            req.body;
+app.post(
+    '/users',
+    //Use express-validator for input validation
+    [
+        check(
+            'username',
+            'Username is required. Username must be at least 5 characters.'
+        ).isLength({ min: 5 }),
+        check(
+            'username',
+            'Username contains non alphanumeric characters - not allowed.'
+        ).isAlphanumeric(),
+        check('password', 'Password is required').not().isEmpty(),
+        check('email', 'Email does not appear to be valid').isEmail(),
+        check('birthday').isDate().optional({ checkFalsy: true }),
+    ],
+    async (req, res) => {
+        async function createUser() {
+            // check the validation object for errors
+            let errors = validationResult(req);
 
-        let hashedPassword = User.hashPassword(password);
+            if (!errors.isEmpty()) {
+                return res.status(422).json({ errors: errors.array() });
+            }
+            //End: check the validation object for errors
 
-        try {
-            const existUserCheck = await User.findOne({
-                username: username,
-            });
+            const { username, password, email, birthday, favouriteMovies } =
+                req.body;
 
-            if (existUserCheck != null) {
-                return res.status(400).send(username + ' already exists');
-            } else {
-                const createNewUser = new User({
+            let hashedPassword = User.hashPassword(password);
+
+            try {
+                const existUserCheck = await User.findOne({
                     username: username,
-                    password: hashedPassword,
-                    email: email,
-                    birthday: birthday,
-                    favouriteMovies: favouriteMovies,
                 });
 
-                await createNewUser.save();
-                res.status(201).json(createNewUser);
+                if (existUserCheck != null) {
+                    return res.status(400).send(username + ' already exists');
+                } else {
+                    const createNewUser = new User({
+                        username: username,
+                        password: hashedPassword,
+                        email: email,
+                        birthday: birthday,
+                        favouriteMovies: favouriteMovies,
+                    });
+
+                    await createNewUser.save();
+                    res.status(201).json(createNewUser);
+                }
+            } catch (e) {
+                console.log(e);
+                res.status(400).send(`error: ${e}`);
             }
-        } catch (e) {
-            console.log(e);
-            res.status(400).send(`error: ${e}`);
         }
+        createUser();
     }
-    createUser();
-});
+);
 
 app.route('/users/:id')
     .get(
