@@ -5,6 +5,7 @@ const express = require('express'),
     path = require('path'), // Require Node module path
     bodyParser = require('body-parser'), //Require body-parser
     mongoose = require('mongoose'), //Require Mongoose
+    cors = require('cors'),
     uuid = require('uuid'); //Require UUID
 //Require models
 const { Movie, User } = require('./models/models');
@@ -31,6 +32,25 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 //Require dotenv
 require('dotenv').config();
+
+//Use cors to control which domains have access to API
+let allowedOrigins = ['http://localhost:8080', 'http://testsite.com'];
+
+app.use(
+    cors({
+        origin: (origin, callback) => {
+            if (!origin) return callback(null, true);
+            if (allowedOrigins.indexOf(origin) === -1) {
+                // If a specific origin isn’t found on the list of allowed origins
+                let message =
+                    'The CORS policy for this application does not allow access from origin ' +
+                    origin;
+                return callback(new Error(message), false);
+            }
+            return callback(null, true);
+        },
+    })
+);
 
 //Require auth.js, passport.js file, as well passport module
 const setupLoginRoute = require('./auth');
