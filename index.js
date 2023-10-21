@@ -383,7 +383,9 @@ app.route('/users/:id')
             check('email', 'Email does not appear to be valid')
                 .isEmail()
                 .optional({ checkFalsy: true }),
-            check('birthday').isDate().optional({ checkFalsy: true }),
+            check('birthday', 'Date does not appear to be valid.')
+                .isDate()
+                .optional({ checkFalsy: true }),
         ],
         async (req, res) => {
             // Create Express PUT route located at the endpoint “/users/:id”. Allow users to update their data.
