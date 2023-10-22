@@ -252,7 +252,13 @@ app.post(
             'username',
             'Username contains non alphanumeric characters - not allowed.'
         ).isAlphanumeric(),
-        check('password', 'Password is required').not().isEmpty(),
+        check(
+            'password',
+            'Password is required. Password must be at least 5 and maximum 10 charachters.'
+        )
+            .not()
+            .isEmpty()
+            .isLength({ min: 5, max: 10 }),
         check('email', 'Email does not appear to be valid').isEmail(),
         check('birthday').isDate().optional({ checkFalsy: true }),
     ],
