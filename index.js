@@ -362,6 +362,7 @@ app.route('/users/:id')
 
                 const { username, password, email, birthday } = req.body;
                 const { id } = req.params;
+                let hashedPassword = User.hashPassword(password);
                 // CONDITION TO CHECK: makes sure that the username in the request body matches the one in the DB.
                 const checkUserName = await User.findOne({
                     _id: id,
@@ -387,7 +388,7 @@ app.route('/users/:id')
                     const updateUserById = await User.findByIdAndUpdate(id, {
                         $set: {
                             username: username,
-                            password: password,
+                            password: hashedPassword,
                             email: email,
                             birthday: birthday,
                         },
