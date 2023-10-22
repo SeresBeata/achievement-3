@@ -14,7 +14,7 @@ const { Movie, User } = require('./models/models');
 //Declare variable that encapsulates Express’s functionality
 const app = express();
 //Server Port
-const port = 3000;
+const port = process.env.PORT || 3000;
 
 // Create a writable stream (in append mode) for writing log data in "log.txt"file
 const accessLogStream = fs.createWriteStream(path.join(__dirname, 'log.txt'), {
@@ -561,6 +561,6 @@ app.use((err, req, res, next) => {
 });
 
 //Listen for requests on port
-app.listen(port, () => {
+app.listen(port, '0.0.0.0', () => {
     console.log(`Example app listening on port ${port}`);
 });
