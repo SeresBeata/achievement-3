@@ -372,6 +372,18 @@ app.route('/users/:id')
                 }
                 // CONDITION ENDS
                 try {
+                    //Check if desired username is already taken
+                    const checkDesiredUsername = await User.findOne({
+                        username: username,
+                    });
+                    if (checkDesiredUsername != null) {
+                        return res
+                            .status(400)
+                            .send(
+                                `Sorry the username ${username} is already taken.`
+                            );
+                    }
+                    //End: Check if desired username is already taken
                     const updateUserById = await User.findByIdAndUpdate(id, {
                         $set: {
                             username: username,
