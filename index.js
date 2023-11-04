@@ -36,7 +36,11 @@ app.use(bodyParser.urlencoded({ extended: true }));
 require('dotenv').config();
 
 //Use cors to control which domains have access to API
-let allowedOrigins = ['http://localhost:8080', 'http://testsite.com'];
+let allowedOrigins = [
+    'http://localhost:1234',
+    'http://localhost:8080',
+    'http://testsite.com',
+];
 
 app.use(
     cors({
