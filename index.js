@@ -78,7 +78,7 @@ app.get('/', (req, res) => {
 //MOVIE ROUTES --------------------------------------------------------------------------
 
 app.route('/movies').get(
-    //passport.authenticate('jwt', { session: false }),
+    passport.authenticate('jwt', { session: false }),
     async (req, res) => {
         //Create Express GET route located at the endpoint “/movies”. Return a list of ALL movies.
         async function getAllMovies() {
