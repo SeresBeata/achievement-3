@@ -34,8 +34,8 @@ The aim of this project was to build the server-side component of a “myFlix”
 
 ### Link to the App
 
-A link to the live, hosted version of the app: [https://movieapi-myflix.onrender.com/](https://movieapi-myflix.onrender.com/)  
-A link to the documentation of the app: [https://movieapi-myflix.onrender.com/documentations/documentation.html](https://movieapi-myflix.onrender.com/documentations/documentation.html)
+A link to the live, hosted version of the app: [https://movie-myflix-c346f5fde8cf.herokuapp.com/](https://movie-myflix-c346f5fde8cf.herokuapp.com/)  
+A link to the documentation of the app: [https://movie-myflix-c346f5fde8cf.herokuapp.com/documentations/documentation.html](https://movie-myflix-c346f5fde8cf.herokuapp.com/documentations/documentation.html)
 
 ### Technologies
 
@@ -59,10 +59,10 @@ The following technologies were used:
 ### References
 
 1.  Reference  
-    Description: Render is a unified cloud to build and run apps and websites with free TLS certificates, global CDN, private networks and auto deploys from Git.  
-    Product: Render  
-    Date: 23/10/2023  
-    [https://render.com/](https://render.com/)
+    Description: Heroku is a platform as a service (PaaS) that enables developers to build, run, and operate applications entirely in the cloud.  
+    Product: Heroku  
+    Date: 13/11/2023  
+    [https://www.heroku.com/](https://www.heroku.com/)
 
 2.  Reference  
     Description: MongoDB Atlas is a multi-cloud database service by the same team that build MongoDB. Atlas simplifies deploying and managing databases while offering the versatility to build resilient and performant global applications on the cloud providers of choice.  
