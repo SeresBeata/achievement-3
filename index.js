@@ -36,31 +36,35 @@ app.use(bodyParser.urlencoded({ extended: true }));
 require('dotenv').config();
 
 //Use cors to control which domains have access to API
-let allowedOrigins = [
-    'http://localhost:1234',
-    'http://localhost:8080',
-    'http://testsite.com',
-    'https://6562232afbcc754b64c650d8--mymovie-myflix.netlify.app/',
-    'https://main--mymovie-myflix.netlify.app/',
-    'https://mymovie-myflix.netlify.app/',
-    'https://movie-myflix-c346f5fde8cf.herokuapp.com/',
-];
+// let allowedOrigins = [
+//     'http://localhost:1234',
+//     'http://localhost:8080',
+//     'http://testsite.com',
+//     'https://6562232afbcc754b64c650d8--mymovie-myflix.netlify.app/',
+//     'https://main--mymovie-myflix.netlify.app/',
+//     'https://mymovie-myflix.netlify.app/',
+//     'https://movie-myflix-c346f5fde8cf.herokuapp.com/',
+// ];
 
-app.use(
-    cors({
-        origin: (origin, callback) => {
-            if (!origin) return callback(null, true);
-            if (allowedOrigins.indexOf(origin) === -1) {
-                // If a specific origin isn’t found on the list of allowed origins
-                let message =
-                    'The CORS policy for this application does not allow access from origin ' +
-                    origin;
-                return callback(new Error(message), false);
-            }
-            return callback(null, true);
-        },
-    })
-);
+// app.use(
+//     cors({
+//         origin: (origin, callback) => {
+//             if (!origin) return callback(null, true);
+//             if (allowedOrigins.indexOf(origin) === -1) {
+//                 // If a specific origin isn’t found on the list of allowed origins
+//                 let message =
+//                     'The CORS policy for this application does not allow access from origin ' +
+//                     origin;
+//                 return callback(new Error(message), false);
+//             }
+//             return callback(null, true);
+//         },
+//     })
+// );
+
+//allows all sites to access api:
+const cors = require('cors');
+app.use(cors());
 
 //Require auth.js, passport.js file, as well passport module
 const setupLoginRoute = require('./auth');
