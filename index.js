@@ -42,6 +42,7 @@ let allowedOrigins = [
     'http://testsite.com',
     'https://6562232afbcc754b64c650d8--mymovie-myflix.netlify.app/',
     'https://main--mymovie-myflix.netlify.app/',
+    'https://mymovie-myflix.netlify.app/',
 ];
 
 app.use(
