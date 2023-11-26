@@ -63,7 +63,6 @@ require('dotenv').config();
 // );
 
 //allows all sites to access api:
-const cors = require('cors');
 app.use(cors());
 
 //Require auth.js, passport.js file, as well passport module
