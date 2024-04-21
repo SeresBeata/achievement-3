@@ -46,6 +46,7 @@ let allowedOrigins = [
     'https://mymovie-myflix.netlify.app',
     'https://movie-myflix-c346f5fde8cf.herokuapp.com/',
     'https://movie-myflix-c346f5fde8cf.herokuapp.com',
+    'http://localhost:4200',
 ];
 
 app.use(
