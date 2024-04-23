@@ -47,6 +47,7 @@ let allowedOrigins = [
     'https://movie-myflix-c346f5fde8cf.herokuapp.com/',
     'https://movie-myflix-c346f5fde8cf.herokuapp.com',
     'http://localhost:4200',
+    'http://localhost:4200/',
 ];
 
 app.use(
