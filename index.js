@@ -48,6 +48,10 @@ let allowedOrigins = [
     'https://movie-myflix-c346f5fde8cf.herokuapp.com',
     'http://localhost:4200',
     'http://localhost:4200/',
+    'https://seresbeata.github.io',
+    'https://seresbeata.github.io/achievement-7/',
+    'https://seresbeata.github.io/achievement-7/welcome',
+    'https://seresbeata.github.io/adept/',
 ];
 
 app.use(
