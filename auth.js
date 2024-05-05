@@ -16,6 +16,14 @@ let generateJWTToken = (user) => {
     });
 };
 
+/**
+ * Handle POST requests to login a user.
+ *
+ * @function
+ * @name loginUser
+ *
+ */
+
 //Create “/login” endpoint for registered users
 module.exports = (router) => {
     router.post('/login', (req, res) => {

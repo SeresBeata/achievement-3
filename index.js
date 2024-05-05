@@ -93,6 +93,14 @@ app.get('/', (req, res) => {
 
 //MOVIE ROUTES --------------------------------------------------------------------------
 
+/**
+ * Handle GET requests to access all movies.
+ *
+ * @function
+ * @name getMovies
+ *
+ */
+
 app.route('/movies').get(
     passport.authenticate('jwt', { session: false }),
     async (req, res) => {
@@ -110,6 +118,15 @@ app.route('/movies').get(
 );
 
 //Create Express GET route located at the endpoint “/movies/:title”. Return a single movie by title.
+
+/**
+ * Handle GET requests to access for a specific movie.
+ *
+ * @function
+ * @name getMovie
+ *
+ */
+
 app.get(
     '/movies/:title',
     passport.authenticate('jwt', { session: false }),
@@ -135,6 +152,15 @@ app.get(
 );
 
 //Create Express GET route located at the endpoint “/movies/moviesbygenres/:genreName”. Return movies by genre.
+
+/**
+ * Handle GET requests to access for a list of movies by a specific genre.
+ *
+ * @function
+ * @name getMoviesByGenre
+ *
+ */
+
 app.get(
     '/movies/moviesbygenres/:genreName',
     passport.authenticate('jwt', { session: false }),
@@ -168,6 +194,15 @@ app.get(
 );
 
 //Create Express GET route located at the endpoint “/movies/genres/:genreName”. Return data about a genre by it's name.
+
+/**
+ * Handle GET requests to access for a specific genre.
+ *
+ * @function
+ * @name getGenre
+ *
+ */
+
 app.get(
     '/movies/genres/:genreName',
     passport.authenticate('jwt', { session: false }),
@@ -196,6 +231,15 @@ app.get(
 );
 
 //Create Express GET route located at the endpoint “/movies/moviesbydirector/:directorName”. Return movies by director.
+
+/**
+ * Handle GET requests to access for a list of movies by a specific director.
+ *
+ * @function
+ * @name getMoviesByDirector
+ *
+ */
+
 app.get(
     '/movies/moviesbydirectors/:directorName',
     passport.authenticate('jwt', { session: false }),
@@ -229,6 +273,15 @@ app.get(
 );
 
 //Create Express GET route located at the endpoint “/movies/directors/:directorName”. Return data about a director by name.
+
+/**
+ * Handle GET requests to access for a specific director.
+ *
+ * @function
+ * @name getDirector
+ *
+ */
+
 app.get(
     '/movies/directors/:directorName',
     passport.authenticate('jwt', { session: false }),
@@ -260,6 +313,15 @@ app.get(
 //USER ROUTES --------------------------------------------------------------------------
 
 //Create Express POST route located at the endpoint “/users”. Allow new users to register.
+
+/**
+ * Handle POST requests to create a new user.
+ *
+ * @function
+ * @name createUser
+ *
+ */
+
 app.post(
     '/users',
     //Use express-validator for input validation
@@ -324,6 +386,30 @@ app.post(
         createUser();
     }
 );
+
+/**
+ * Handle GET requests to access for a specific director user information.
+ *
+ * @function
+ * @name getUserInfo
+ *
+ */
+
+/**
+ * Handle PUT request to update user information.
+ *
+ * @function
+ * @name editUserInfo
+ *
+ */
+
+/**
+ * Handle DEL request to delete a user.
+ *
+ * @function
+ * @name delUser
+ *
+ */
 
 app.route('/users/:id')
     .get(
@@ -457,6 +543,20 @@ app.route('/users/:id')
             }
         }
     );
+
+/**
+ * Handle POST requests to add a movie to a user's favorites.
+ *
+ * @function
+ * @name addFavoriteMovie
+ */
+
+/**
+ * Handle DEL requests to delete a movie from a user's favorites.
+ *
+ * @function
+ * @name deleteFavoriteMovie
+ */
 
 app.route('/users/:id/:movieId')
     .post(
